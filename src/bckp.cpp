@@ -28,7 +28,7 @@ int main(int argc, char** argv)
         const std::string input_directory = input.get_cmd_option("-i");
         const std::string backup_directory = input.get_cmd_option("-o");
 
-        compare_directories(input_directory, backup_directory);
+        unidirectional_directory_backup(input_directory, backup_directory);
     }
     else 
     {
