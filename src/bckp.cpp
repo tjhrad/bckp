@@ -43,3 +43,4 @@ int main(int argc, char** argv)
 // C comparison mode.
 // U unidirectional backup mode.
 // M multidirectional backup mode (sync). 
+// Add flag for allowing hidden files -h
