@@ -1,6 +1,5 @@
 
 #include "bckp.h"
-#include <iostream>
 
 int main(int argc, char** argv)
 {
@@ -11,6 +10,7 @@ int main(int argc, char** argv)
     }
 
     InputParser input(argc, argv);
+    
     if(input.cmd_option_exists("-h") || input.cmd_option_exists("--help"))
     {
         print_help();
@@ -43,4 +43,4 @@ int main(int argc, char** argv)
 // C comparison mode.
 // U unidirectional backup mode.
 // M multidirectional backup mode (sync). 
-// Add flag for allowing hidden files -h
+// Add flag for allowing hidden files

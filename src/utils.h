@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 int check_if_directory_exists(const std::filesystem::path& path, std::filesystem::file_status status);
 int unidirectional_directory_backup(std::string directory1, std::string directory2);
