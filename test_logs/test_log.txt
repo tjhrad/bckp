@@ -1,0 +1,18 @@
+/home/quasar >>> /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar
+Updated file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.mozilla/firefox/bu2fa9z3.default-release/storage/default/moz-extension+++d36b22e6-8430-48dd-a83b-a1aa220c4178^userContextId=4294967295/idb/3647222921wleabcEoxlt-eengsairo.sqlite-wal
+Updated file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.mozilla/firefox/bu2fa9z3.default-release/sessionstore-backups/recovery.baklz4
+Updated file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.mozilla/firefox/bu2fa9z3.default-release/sessionstore-backups/recovery.jsonlz4
+Updated file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.mozilla/firefox/bu2fa9z3.default-release/datareporting/glean/db/data.safe.bin
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/C0823422D61A683388CC112965E694C90B7CDAD0
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/17E0FF4471127DBB7AF555F0A1D53FB2B4DC682B
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/F6C3A81D2EB9DAA633683D29357924AA71045AC5
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/93D59D768A99B277F8F353316C027ADE16CB990C
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/127A4AB37CC2273814DE6812E46F25CFDFF5C7C7
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/866F3644DAADB4B85B314D0C70242D2DF41517B2
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/41118A5A446B593231D7AACAFED4F38AF681D46D
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/7FC369E76018A268B8A8D3D09C375CE47AFD3686
+Created file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.cache/mozilla/firefox/bu2fa9z3.default-release/cache2/entries/2F1204071F19BBA4983F6E8E22FEA1E971064C36
+Removed file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.local/share/Trash/files/15M PHYS - MRI_ Sequences JOIN 1.avi
+Removed file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.local/share/Trash/files/4A REPRO - Endometrial and Cervical Cancer.avi
+Removed file: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.local/share/Trash/files/[SubsPlease] Sousou no Frieren - 01 (1080p) [F02B9CEE].mkv (9)
+Removed directory: /run/media/quasar/Storage_Backup/Linux_Storage_Backup/arch_linux_backup/home_quasar/.local/share/Trash/files/Crack the Core Videos (9)

@@ -9,13 +9,33 @@ int check_if_exists(const std::filesystem::path& path,
         return 0;
 }
 
-int unidirectional_directory_backup(std::string main_directory, std::string backup_directory)
+void save_vector_to_file(std::string file_name,std::vector<std::string> file_data)
+{
+    std::cout << "Saving file: " << file_name << std::endl;
+    std::ofstream file(file_name);
+    for (std::string s: file_data)
+    {
+        file << s << std::endl;
+    }
+    file.close();
+}
+
+int unidirectional_directory_backup(std::string main_directory, std::string backup_directory, std::string log_file="", bool ignore_hidden=false)
 {
     const std::filesystem::path main_directory_path = main_directory;
     const std::filesystem::path backup_directory_path = backup_directory;
+    //const std::filesystem::path log_file_path = log_file;
 
+    std::vector<std::string> log_file_data;
+
+    if(log_file != "")
+        log_file_data.push_back(main_directory + " >>> " + backup_directory);
+
+    std::cout << std::endl <<"Starting backup" << std::endl;
     std::cout << main_directory << " >>> ";
-    std::cout << backup_directory << std::endl << std::endl;
+    std::cout << backup_directory << std::endl;
+    std::cout << "Log file: " << log_file << std::endl;
+    std::cout << "Please wait..." << std::endl;
 
     int number_files_created = 0;
     int number_directories_created = 0;
@@ -35,20 +55,26 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
     {
         std::filesystem::create_directory(backup_directory);
     }
-
-    //auto ec = std::error_code();
     
     auto iter = std::filesystem::recursive_directory_iterator(main_directory, std::filesystem::directory_options::skip_permission_denied);
     auto end_iter = std::filesystem::end(iter);
     auto ec = std::error_code();
 
-    //for (auto const& entry : std::filesystem::recursive_directory_iterator(main_directory,std::filesystem::directory_options::skip_permission_denied))
+    int total_files = 0;
+    int current_count = 0;
+    for (; iter != end_iter; iter.increment(ec))
+        total_files += 1;
+
+    iter = std::filesystem::recursive_directory_iterator(main_directory, std::filesystem::directory_options::skip_permission_denied);
+    end_iter = std::filesystem::end(iter);
+
     for (; iter != end_iter; iter.increment(ec))
     {
+        std::cout << (current_count) << " of " << (total_files) << " files." << '\r';
         auto const& entry = iter.operator*();
 
-        //if(entry.path().string().find("/.") != std::string::npos)
-        //    continue;
+        if(ignore_hidden && entry.path().string().find("/.") != std::string::npos)
+            continue;
 
         //auto ec = std::error_code();
         if ( std::filesystem::is_directory(entry.path(),ec) )
@@ -61,7 +87,9 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
                 std::filesystem::create_directory(temporary_backup_directory_path,ec);
                 if(ec.message() == "Success")
                 {
-                    std::cout << "Created directory: " << temporary_backup_directory_path.string() << std::endl;
+                    if(log_file != "")
+                        log_file_data.push_back("Created directory: " + temporary_backup_directory_path.string());
+                    //std::cout << "Created directory: " << temporary_backup_directory_path.string() << std::endl;
                     number_directories_created += 1;
                     ec.clear();
                 }
@@ -82,7 +110,9 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
                 std::filesystem::copy_file(entry.path(),temporary_backup_file_path,ec);
                 if(ec.message() == "Success")
                 {
-                    std::cout << "Created file: " << temporary_backup_file_path.string() << std::endl;
+                    if(log_file != "")
+                        log_file_data.push_back("Created file: " + temporary_backup_file_path.string());
+                    //std::cout << "Created file: " << temporary_backup_file_path.string() << std::endl;
                     number_files_created += 1;
                     ec.clear();
                 }
@@ -100,7 +130,9 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
                     std::filesystem::copy_file(entry.path(),temporary_backup_file_path,ec);
                     if(ec.message() == "Success")
                     {
-                        std::cout << "Updated file: " << entry.path().string() << std::endl;
+                        if(log_file != "")
+                            log_file_data.push_back("Updated file: " + temporary_backup_file_path.string());
+                        //std::cout << "Updated file: " << temporary_backup_file_path.string() << std::endl;
                         number_files_updated += 1;
                         ec.clear();
                     }
@@ -111,11 +143,17 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
         
         if(ec.message() != "Success" && ec.message() != "No such file or directory")
         {
-            std::cout << "\nWarning! Non-throwing form sets error_code: " << ec.message() << '\n';
+            if(log_file != "")
+            {
+                log_file_data.push_back("Warning! Something went wrong. error_code: " + ec.message());
+                log_file_data.push_back(entry.path().string());
+            } 
+            //std::cout << "\nWarning! Something went wrong. error_code: " << ec.message() << std::endl;
+            //std::cout << entry.path().string() << std::endl;
             ec.clear();
         }
             
-        
+        current_count += 1;
     }
 
     auto iter2 = std::filesystem::recursive_directory_iterator(backup_directory, std::filesystem::directory_options::skip_permission_denied);
@@ -126,8 +164,9 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
     for (; iter2 != end_iter2; iter2.increment(ec2))
     {
         auto const& entry = iter2.operator*();
-        //if(entry.path().string().find("/.") != std::string::npos)
-        //    continue;
+
+        if(ignore_hidden && entry.path().string().find("/.") != std::string::npos)
+            continue;
 
         //auto ec = std::error_code();
         if ( std::filesystem::is_directory(entry.path(),ec2) )
@@ -142,7 +181,10 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
                 std::filesystem::remove_all(entry.path(),ec2);
                 if(ec2.message() == "Success")
                 {
-                    std::cout << "Removed directory: " << entry.path() << std::endl;
+                    if(log_file != "")
+                        log_file_data.push_back("Removed directory: " + entry.path().string());
+
+                    //std::cout << "Removed directory: " << entry.path() << std::endl;
                     number_directories_deleted += 1;
                     ec2.clear();
                 }
@@ -157,14 +199,15 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
 
             if(!check_if_exists(temporary_main_file_path))
             {
-                
+                number_files_compared += 1;
                 //std::filesystem::remove(entry.path());
                 std::filesystem::remove(entry.path(),ec2);
                 if(ec2.message() == "Success")
                 {
-                    std::cout << "Removed file: " << entry.path().string() << std::endl;
+                    if(log_file != "")
+                        log_file_data.push_back("Removed file: " + entry.path().string());
+                    //std::cout << "Removed file: " << entry.path().string() << std::endl;
                     number_files_deleted += 1;
-                    number_files_compared += 1;
                     ec2.clear();
                 }
                 
@@ -172,7 +215,11 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
         }
         if(ec2.message() != "Success" && ec2.message() != "No such file or directory")
         {
-            std::cout << "\nWarning! Non-throwing form sets error_code: " << ec2.message() << '\n';
+            if(log_file != "")
+            {
+                log_file_data.push_back("Warning! Something went wrong. error_code: " + ec2.message());
+                log_file_data.push_back(entry.path().string());
+            } 
             ec2.clear();
         }
 
@@ -188,5 +235,10 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
 
     std::cout << std::endl << "Backup complete!" << std::endl;
 
+    if(log_file != "")
+        save_vector_to_file(log_file, log_file_data);
+
     return 1;
 }
+
+
