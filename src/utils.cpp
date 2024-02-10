@@ -11,7 +11,6 @@ int check_if_exists(const std::filesystem::path& path,
 
 void save_vector_to_file(std::string file_name,std::vector<std::string> file_data)
 {
-    std::cout << "Saving file: " << file_name << std::endl;
     std::ofstream file(file_name);
     for (std::string s: file_data)
     {
@@ -84,6 +83,7 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
             std::filesystem::path temporary_backup_directory_path = backup_directory_path / temporary_stem.relative_path();
             if(!check_if_exists(temporary_backup_directory_path))
             {
+                ec.clear();
                 std::filesystem::create_directory(temporary_backup_directory_path,ec);
                 if(ec.message() == "Success")
                 {
@@ -105,8 +105,7 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
 
             if(!check_if_exists(temporary_backup_file_path))
             {
-                
-
+                ec.clear();
                 std::filesystem::copy_file(entry.path(),temporary_backup_file_path,ec);
                 if(ec.message() == "Success")
                 {
@@ -125,7 +124,7 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
                 if (main_file_size != backup_file_size)
                 {
                     //std::cout << "Updating file: " << entry.path().string() << std::endl;
-
+                    ec.clear();
                     std::filesystem::remove(temporary_backup_file_path,ec);
                     std::filesystem::copy_file(entry.path(),temporary_backup_file_path,ec);
                     if(ec.message() == "Success")
@@ -178,6 +177,7 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
             {
                 //std::cout << "Removing directory: " << entry.path() << std::endl;
                 //std::filesystem::remove_all(entry.path());
+                ec2.clear();
                 std::filesystem::remove_all(entry.path(),ec2);
                 if(ec2.message() == "Success")
                 {
@@ -201,6 +201,7 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
             {
                 number_files_compared += 1;
                 //std::filesystem::remove(entry.path());
+                ec2.clear();
                 std::filesystem::remove(entry.path(),ec2);
                 if(ec2.message() == "Success")
                 {
