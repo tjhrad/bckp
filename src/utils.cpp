@@ -159,7 +159,6 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
     auto end_iter2 = std::filesystem::end(iter2);
     auto ec2 = std::error_code();
 
-    //for (auto const& entry : std::filesystem::recursive_directory_iterator(backup_directory,std::filesystem::directory_options::skip_permission_denied))
     for (; iter2 != end_iter2; iter2.increment(ec2))
     {
         auto const& entry = iter2.operator*();
@@ -167,7 +166,6 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
         if(ignore_hidden && entry.path().string().find("/.") != std::string::npos)
             continue;
 
-        //auto ec = std::error_code();
         if ( std::filesystem::is_directory(entry.path(),ec2) )
         {
             std::string dir = entry.path().string();
@@ -176,7 +174,7 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
             if(!check_if_exists(temporary_main_directory_path))
             {
                 //std::cout << "Removing directory: " << entry.path() << std::endl;
-                //std::filesystem::remove_all(entry.path());
+
                 ec2.clear();
                 std::filesystem::remove_all(entry.path(),ec2);
                 if(ec2.message() == "Success")
@@ -200,7 +198,6 @@ int unidirectional_directory_backup(std::string main_directory, std::string back
             if(!check_if_exists(temporary_main_file_path))
             {
                 number_files_compared += 1;
-                //std::filesystem::remove(entry.path());
                 ec2.clear();
                 std::filesystem::remove(entry.path(),ec2);
                 if(ec2.message() == "Success")
